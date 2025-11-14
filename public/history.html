@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepGod - History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="auth.js"></script>
+
+<main>
+    <div class="header-bar">
+        <h1>RepGod</h1>
+        <div class="user-info">
+            <span id="welcome-message"></span>
+            <button id="logout-btn" class="btn-tertiary">Logout</button>
+        </div>
+    </div>
+    <p>View your exercise history.</p>
+
+    <a href="/" class="nav-link">&larr; Back to Log Workout</a>
+
+    <div class="form-group">
+        <label>Select an Exercise:</label>
+        <div id="exercise-list-container">
+        </div>
+    </div>
+
+    <div id="results-area" style="display: none;">
+        <hr>
+        <h2 id="chart-title"></h2>
+        <div class="chart-container">
+            <canvas id="progress-chart"></canvas>
+        </div>
+        <hr>
+        <h3>Raw Data</h3>
+        <div id="history-table-container"></div>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="history.js"></script>
+</body>
+</html>

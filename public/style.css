@@ -1,0 +1,220 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+main {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 24px 30px;
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    color: #111;
+    margin-top: 0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 24px 0;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.exercise-block {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.exercise-block h3 {
+    margin-top: 0;
+}
+
+.set-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.set-group label {
+    font-weight: 500;
+    flex-basis: 10%;
+    align-self: center;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #007aff;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #e5e5e0;
+    color: #333;
+}
+.btn-secondary:hover {
+    background-color: #dcdcdc;
+}
+
+.btn-tertiary {
+    background-color: transparent;
+    color: #007aff;
+    padding: 8px 0;
+    width: auto;
+}
+.btn-tertiary:hover {
+    text-decoration: underline;
+}
+
+.nav-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007aff;
+    text-decoration: none;
+    font-weight: 500;
+}
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #eee;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.header-bar h1 {
+    margin: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#welcome-message {
+    font-weight: 600;
+    color: #333;
+}
+
+#logout-btn {
+    width: auto;
+    padding: 0;
+    color: #dc3545;
+}
+
+.user-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.user-btn {
+    padding: 20px;
+    font-size: 1.2em;
+}
+
+.exercise-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.exercise-item .exercise-btn {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.exercise-item .exercise-btn.active {
+    background-color: #007aff;
+    color: white;
+}
+
+.exercise-item .edit-btn,
+.exercise-item .delete-btn {
+    width: auto;
+    padding: 8px 10px;
+    flex-shrink: 0;
+}
+
+.exercise-item .delete-btn {
+    color: #dc3545;
+}

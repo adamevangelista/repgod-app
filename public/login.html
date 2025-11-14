@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-R">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepGod - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <h1>RepGod Login</h1>
+    <p>Enter the password to access the app.</p>
+
+    <form id="login-form">
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
+</main>
+
+<script>
+    const MASTER_PASSWORD = "chad";
+
+    const form = document.getElementById('login-form');
+    const passInput = document.getElementById('password');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (passInput.value === MASTER_PASSWORD) {
+            localStorage.setItem('liftLogicAuth', 'true');
+            window.location.href = '/select';
+        } else {
+            alert('Incorrect password.');
+            passInput.value = "";
+        }
+    });
+</script>
+</body>
+</html>

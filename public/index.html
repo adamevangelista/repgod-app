@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepGod - Log Workout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="auth.js"></script>
+
+<main>
+    <div class="header-bar">
+        <h1>RepGod</h1>
+        <div class="user-info">
+            <span id="welcome-message"></span>
+            <button id="logout-btn" class="btn-tertiary">Logout</button>
+        </div>
+    </div>
+    <p>Log today's workout.</p>
+    <a href="/history" class="nav-link">View Exercise History &rarr;</a>
+
+    <form id="workout-form">
+        <div class="form-group">
+            <label for="workout-title">Workout Title</label>
+            <input type="text" id="workout-title" placeholder="e.g., Back/Arms" required>
+        </div>
+        <div class="form-group">
+            <label for="workout-date">Date</label>
+            <input type="date" id="workout-date" required>
+        </div>
+        <hr>
+        <div id="exercises-container"></div>
+        <button type="button" class="btn-secondary" id="add-exercise-btn">
+            + Add Exercise
+        </button>
+        <hr>
+        <button type="submit" class="btn-primary">
+            Save Workout
+        </button>
+    </form>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
