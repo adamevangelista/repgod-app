@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepGod - Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <h1>RepGod Sign Up</h1>
+    <p>Create your profile.</p>
+
+    <form id="signup-form">
+        <div class="name-row" style="display: flex; gap: 10px;">
+            <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" required>
+            </div>
+            <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" required>
+            </div>
+        </div>
+
+        <div class="name-row" style="display: flex; gap: 10px;">
+            <div class="form-group">
+                <label for="height">Height (e.g., 5'10)</label>
+                <input type="text" id="height" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (lbs)</label>
+                <input type="number" id="weight" step="0.1" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn-primary">Sign Up</button>
+    </form>
+
+    <p style="text-align: center; margin-top: 20px;">
+        Already have an account? <a href="/login" class="nav-link">Login here</a>
+    </p>
+    <div id="message-area"></div>
+</main>
+
+<script>
+    const form = document.getElementById('signup-form');
+    const messageArea = document.getElementById('message-area');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const payload = {
+            first_name: document.getElementById('fname').value,
+            last_name: document.getElementById('lname').value,
+            height: document.getElementById('height').value,
+            weight: document.getElementById('weight').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                messageArea.textContent = 'Profile created! Redirecting to login...';
+                messageArea.className = 'success';
+                setTimeout(() => window.location.href = '/login', 1500);
+            } else {
+                messageArea.textContent = result.error;
+                messageArea.className = 'error';
+            }
+        } catch (error) {
+            messageArea.textContent = 'Error connecting to server';
+            messageArea.className = 'error';
+        }
+    });
+</script>
+</body>
+</html>

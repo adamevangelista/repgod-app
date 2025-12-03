@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RepGod - Log Workout</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 <script src="auth.js"></script>
+<datalist id="exercise-list-data"></datalist>
 
 <main>
     <div class="header-bar">
@@ -18,7 +20,24 @@
         </div>
     </div>
     <p>Log today's workout.</p>
-    <a href="/history" class="nav-link">View Exercise History &rarr;</a>
+    <a href="/dashboard" class="nav-link">&larr; Back to Dashboard</a>
+
+    <div class="form-group">
+        <label>Load Custom Preset:</label>
+        <select id="preset-selector" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+            <option value="">-- Select a Preset --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Rest Timer:</label>
+        <div class="timer-container">
+            <button class="btn-secondary timer-btn" data-time="60">60s</button>
+            <button class="btn-secondary timer-btn" data-time="90">90s</button>
+            <button class="btn-secondary timer-btn" data-time="120">2m</button>
+            <button class="btn-secondary timer-btn" data-time="180">3m</button>
+        </div>
+    </div>
 
     <form id="workout-form">
         <div class="form-group">
@@ -32,15 +51,42 @@
         <hr>
         <div id="exercises-container"></div>
         <button type="button" class="btn-secondary" id="add-exercise-btn">
-            + Add Exercise
+            + Add Exercise Manually
         </button>
         <hr>
         <button type="submit" class="btn-primary">
             Save Workout
         </button>
     </form>
-
 </main>
+
+<div id="timer-display" class="timer-display-hide">0:00</div>
+
+<button id="settings-fab" title="Settings">
+    <i class="fa-solid fa-gear"></i>
+</button>
+
+<div id="settings-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Settings</h3>
+            <button id="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h4>Manage Custom Presets</h4>
+            <div class="preset-manager">
+                <!-- HIDDEN FIELD FOR EDITING -->
+                <input type="hidden" id="edit-preset-id">
+                <input type="text" id="new-preset-name" placeholder="Preset Name (e.g. Leg Day)">
+                <textarea id="new-preset-exercises" placeholder="Exercises (comma separated)&#10;e.g. Squat, Leg Press, Lunges" rows="3"></textarea>
+                <button id="create-preset-btn" class="btn-secondary" style="width:100%; margin-top:5px;">Create Preset</button>
+                <button id="cancel-edit-btn" class="btn-tertiary" style="width:100%; display:none; margin-top:5px;">Cancel Edit</button>
+            </div>
+
+            <div id="existing-presets-list"></div>
+        </div>
+    </div>
+</div>
 
 <script src="app.js"></script>
 </body>

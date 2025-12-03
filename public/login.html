@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-R">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RepGod - Login</title>
     <link rel="stylesheet" href="style.css">
@@ -9,31 +9,59 @@
 <body>
 <main>
     <h1>RepGod Login</h1>
-    <p>Enter the password to access the app.</p>
+    <p>Enter your email and password.</p>
 
     <form id="login-form">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" required>
+        </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" required>
         </div>
         <button type="submit" class="btn-primary">Login</button>
     </form>
+
+    <p style="text-align: center; margin-top: 20px;">
+        Don't have an account? <a href="/signup" class="nav-link">Sign up here</a>
+    </p>
+    <div id="message-area"></div>
 </main>
 
 <script>
-    const MASTER_PASSWORD = "chad";
-
     const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
     const passInput = document.getElementById('password');
+    const messageArea = document.getElementById('message-area');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (passInput.value === MASTER_PASSWORD) {
-            localStorage.setItem('liftLogicAuth', 'true');
-            window.location.href = '/select';
-        } else {
-            alert('Incorrect password.');
-            passInput.value = "";
+        messageArea.textContent = "";
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: emailInput.value,
+                    password: passInput.value
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('liftLogicUserID', result.user_id);
+                localStorage.setItem('liftLogicFirstName', result.first_name);
+                window.location.href = '/dashboard';
+            } else {
+                messageArea.textContent = result.error;
+                messageArea.className = 'error';
+            }
+        } catch (error) {
+            messageArea.textContent = 'Error connecting to server';
+            messageArea.className = 'error';
         }
     });
 </script>

@@ -5,40 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RepGod - History</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 <script src="auth.js"></script>
 
-<main>
-    <div class="header-bar">
-        <h1>RepGod</h1>
-        <div class="user-info">
-            <span id="welcome-message"></span>
-            <button id="logout-btn" class="btn-tertiary">Logout</button>
+<div class="page-container">
+    <main>
+        <div class="header-bar">
+            <h1>RepGod</h1>
+            <div class="user-info">
+                <span id="welcome-message"></span>
+                <button id="logout-btn" class="btn-tertiary">Logout</button>
+            </div>
+        </div>
+        <p>View your exercise history.</p>
+
+        <a href="/dashboard" class="nav-link">&larr; Back to Dashboard</a>
+
+        <div class="form-group">
+            <label>Select an Exercise:</label>
+            <div id="exercise-list-container">
+            </div>
+        </div>
+
+        <div id="results-area" style="display: none;">
+            <hr>
+            <div class="chart-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="chart-title"></h2>
+                <button id="open-add-data-btn" class="btn-secondary" style="width:auto; padding: 5px 10px; font-size: 0.9em;">+ Add Data</button>
+            </div>
+
+            <div class="chart-container" style="height: 300px;"> <!-- Fixed height helps chart.js -->
+                <canvas id="progress-chart"></canvas>
+            </div>
+            <hr>
+            <h3>Raw Data</h3>
+            <div id="history-table-container"></div>
+        </div>
+    </main>
+</div>
+
+<!-- ADD DATA MODAL -->
+<div id="add-data-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add Past Set</h3>
+            <button id="close-data-modal-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="add-data-ex-name" style="font-weight:bold; margin-bottom:10px;"></p>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="add-data-date">
+            </div>
+            <div class="weight-input-group">
+                <input type="number" id="add-data-weight" placeholder="Weight" step="any">
+                <input type="number" id="add-data-reps" placeholder="Reps">
+            </div>
+            <button id="save-data-btn" class="btn-primary" style="margin-top:10px;">Save Set</button>
         </div>
     </div>
-    <p>View your exercise history.</p>
-
-    <a href="/" class="nav-link">&larr; Back to Log Workout</a>
-
-    <div class="form-group">
-        <label>Select an Exercise:</label>
-        <div id="exercise-list-container">
-        </div>
-    </div>
-
-    <div id="results-area" style="display: none;">
-        <hr>
-        <h2 id="chart-title"></h2>
-        <div class="chart-container">
-            <canvas id="progress-chart"></canvas>
-        </div>
-        <hr>
-        <h3>Raw Data</h3>
-        <div id="history-table-container"></div>
-    </div>
-
-</main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="history.js"></script>

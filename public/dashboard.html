@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepGod - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)">
+</head>
+<body>
+<script src="auth.js"></script>
+
+<div class="page-container">
+    <main>
+        <div class="header-bar">
+            <h1>RepGod</h1>
+            <div class="user-info">
+                <span id="user-name-display">Loading...</span>
+                <button id="logout-btn" class="btn-tertiary">Logout</button>
+            </div>
+        </div>
+
+        <div class="welcome-section">
+            <h2>Ready to lift?</h2>
+            <p>Log a workout or check your stats.</p>
+        </div>
+
+        <div class="dashboard-nav-container">
+            <a href="/log" class="btn-primary" id="log-workout-btn">Log Today's Workout</a>
+            <a href="/history" class="btn-secondary" id="view-history-btn">View All History</a>
+        </div>
+    </main>
+
+    <aside class="sidebar-container">
+        <h3>Workout Calendar</h3>
+        <div id="calendar-container">
+            <div id="calendar-header">
+                <button id="prev-month-btn">&larr;</button>
+                <h2 id="month-year-str"></h2>
+                <button id="next-month-btn">&rarr;</button>
+            </div>
+            <div id="calendar-days"></div>
+            <div id="calendar-grid"></div>
+        </div>
+    </aside>
+</div>
+
+<button id="settings-fab" title="Settings">
+    <i class="fa-solid fa-gear"></i>
+</button>
+
+<div id="settings-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Settings</h3>
+            <button id="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h4>Body Weight</h4>
+            <div class="weight-input-group">
+                <input type="number" id="new-weight-input" placeholder="Lbs" step="0.1">
+                <button id="save-weight-btn" class="btn-primary">Save</button>
+            </div>
+            <p class="current-weight-text">Current: <strong id="current-weight-display">--</strong> lbs</p>
+
+            <hr>
+
+            <h4>Manage Custom Presets</h4>
+            <div class="preset-manager">
+                <input type="hidden" id="edit-preset-id">
+                <input type="text" id="new-preset-name" placeholder="Preset Name (e.g. Leg Day)">
+                <textarea id="new-preset-exercises" placeholder="Exercises (comma separated)&#10;e.g. Squat, Leg Press, Lunges" rows="3"></textarea>
+                <button id="create-preset-btn" class="btn-secondary" style="width:100%; margin-top:5px;">Create Preset</button>
+                <button id="cancel-edit-btn" class="btn-tertiary" style="width:100%; display:none; margin-top:5px;">Cancel Edit</button>
+            </div>
+
+            <div id="existing-presets-list"></div>
+        </div>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
