@@ -3,6 +3,8 @@ import os
 from flask import Flask, request, jsonify, send_from_directory, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -20,6 +22,17 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = os.environ.get('FLASK_ENV') == 'production'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+
+@event.listens_for(Engine, "connect")
+def _enable_sqlite_foreign_keys(dbapi_connection, connection_record):
+    # SQLite ignores foreign key constraints unless explicitly enabled per
+    # connection. Postgres (production) always enforces them, so leaving
+    # this off in dev/test would hide FK bugs until they hit production.
+    if isinstance(dbapi_connection, sqlite3.Connection):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 
 def login_required(view):
@@ -297,6 +310,7 @@ def rename_exercise(user_id, exercise_id):
             sets_to_move = Sets.query.filter_by(exercise_id=exercise_id).all()
             for s in sets_to_move:
                 s.exercise_id = existing_target.exercise_id
+            db.session.flush()
 
             old_exercise = Exercises.query.get(exercise_id)
             db.session.delete(old_exercise)
@@ -321,6 +335,7 @@ def delete_exercise(user_id, exercise_id):
         if not exercise: return jsonify({"error": "Access denied"}), 403
         sets = Sets.query.filter_by(exercise_id=exercise_id).all()
         for s in sets: db.session.delete(s)
+        db.session.flush()
         db.session.delete(exercise)
         db.session.commit()
         return jsonify({"message": "Deleted"}), 200

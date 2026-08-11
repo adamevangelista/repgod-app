@@ -69,3 +69,20 @@ def test_log_workout_and_read_history_round_trip(client):
     assert len(history) == 1
     assert history[0]['weight'] == 135
     assert history[0]['reps'] == 8
+
+
+def test_delete_exercise_with_sets_does_not_violate_fk_constraint(client):
+    signup(client, email='deleter@example.com')  # user_id 1
+
+    resp = client.post('/api/log', json={
+        'title': 'Push Day',
+        'date': '2026-08-11',
+        'sets': [{'name': 'Bench Press', 'set': 1, 'weight': 135, 'reps': 8}]
+    })
+    assert resp.status_code == 201
+    exercise_id = client.get('/api/exercises/1').get_json()[0]['id']
+
+    resp = client.delete(f'/api/exercise/1/{exercise_id}')
+    assert resp.status_code == 200
+
+    assert client.get('/api/exercises/1').get_json() == []
