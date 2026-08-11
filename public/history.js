@@ -303,13 +303,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function computePRFlags(history) {
+        // history is chronologically ascending; flag any set whose est. 1RM
+        // exceeds every set before it as a new personal record.
+        let runningMax = -Infinity;
+        return history.map(set => {
+            const e1rm = calculateOneRepMax(set.weight, set.reps);
+            const isPR = e1rm > runningMax;
+            if (isPR) runningMax = e1rm;
+            return isPR;
+        });
+    }
+
     function renderTable(history) {
+        const prFlags = computePRFlags(history);
         let tableHtml = `<table><thead><tr><th>Date</th><th>Set</th><th>Weight</th><th>Reps</th><th>Est. 1RM</th></tr></thead><tbody>`;
         if (history.length > 0) {
             for (let i = history.length - 1; i >= 0; i--) {
                 const set = history[i];
                 const e1rm = calculateOneRepMax(set.weight, set.reps).toFixed(1);
-                tableHtml += `<tr><td>${set.workout_date}</td><td>${set.set_number}</td><td>${set.weight} lbs</td><td>${set.reps}</td><td>${e1rm}</td></tr>`;
+                const isPR = prFlags[i];
+                const rowClass = isPR ? ' class="pr-row"' : '';
+                const badge = isPR ? ' <span class="pr-badge">PR</span>' : '';
+                tableHtml += `<tr${rowClass}><td>${set.workout_date}</td><td>${set.set_number}</td><td>${set.weight} lbs</td><td>${set.reps}</td><td>${e1rm}${badge}</td></tr>`;
             }
         } else {
              tableHtml += `<tr><td colspan="5" style="text-align:center;">No sets found.</td></tr>`;

@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let countdownInterval;
     let exerciseCount = 0;
+    let lastUsedDuration = 90;
 
     if (dateInput) dateInput.valueAsDate = new Date();
 
@@ -224,7 +225,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         if (presetName) fetchLastPerformance(presetName, performanceDiv);
 
-        exerciseBlock.querySelector('.add-set-btn').addEventListener('click', () => addSet(exerciseBlock));
+        exerciseBlock.querySelector('.add-set-btn').addEventListener('click', () => {
+            addSet(exerciseBlock);
+            startTimer(lastUsedDuration);
+        });
         exerciseBlock.querySelector('.delete-ex-btn').addEventListener('click', () => exerciseBlock.remove());
         addSet(exerciseBlock);
     }
@@ -350,7 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.timer-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            startTimer(parseInt(button.dataset.time));
+            lastUsedDuration = parseInt(button.dataset.time);
+            startTimer(lastUsedDuration);
         });
     });
 
