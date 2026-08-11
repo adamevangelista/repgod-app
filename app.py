@@ -278,7 +278,7 @@ def get_history(user_id, exercise_id):
 @app.route('/api/workout-dates/<int:user_id>', methods=['GET'])
 @login_required
 def get_dates(user_id):
-    dates = db.session.query(Workouts.workout_date).filter_by(user_id=user_id).distinct().all()
+    dates = db.session.query(Workouts.workout_date).join(Sets).filter(Workouts.user_id == user_id).distinct().all()
     return jsonify([d.workout_date for d in dates]), 200
 
 @app.route('/api/last-performance/<int:user_id>/<string:exercise_name>', methods=['GET'])

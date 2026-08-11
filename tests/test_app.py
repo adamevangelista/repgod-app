@@ -86,3 +86,21 @@ def test_delete_exercise_with_sets_does_not_violate_fk_constraint(client):
     assert resp.status_code == 200
 
     assert client.get('/api/exercises/1').get_json() == []
+
+
+def test_workout_date_disappears_after_its_only_exercise_is_deleted(client):
+    signup(client, email='calendar@example.com')  # user_id 1
+
+    resp = client.post('/api/log', json={
+        'title': 'Push Day',
+        'date': '2026-08-11',
+        'sets': [{'name': 'Bench Press', 'set': 1, 'weight': 135, 'reps': 8}]
+    })
+    assert resp.status_code == 201
+    assert client.get('/api/workout-dates/1').get_json() == ['2026-08-11']
+
+    exercise_id = client.get('/api/exercises/1').get_json()[0]['id']
+    resp = client.delete(f'/api/exercise/1/{exercise_id}')
+    assert resp.status_code == 200
+
+    assert client.get('/api/workout-dates/1').get_json() == []
